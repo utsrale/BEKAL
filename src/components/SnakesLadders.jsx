@@ -2,10 +2,11 @@
 
 import { useState, useCallback, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Dices, Trophy, RotateCcw, CheckCircle, XCircle, ArrowUp, ArrowDown } from "lucide-react";
+import { Dices, Trophy, RotateCcw, CheckCircle, XCircle, ArrowUp, ArrowDown, Volume2, VolumeX } from "lucide-react";
 import confetti from "canvas-confetti";
 import { quizQuestions } from "@/data/quiz-questions";
 import { updateAchievement, updateBestTime } from "@/utils/storage";
+import { soundFX } from "@/utils/audio";
 
 const BOARD_SIZE = 10;
 const TOTAL_CELLS = 100;
@@ -244,6 +245,13 @@ export default function SnakesLadders() {
     return `${m}:${s}`;
   };
 
+  const [soundEnabled, setSoundEnabled] = useState(true);
+
+  const toggleSound = () => {
+    const newState = soundFX.toggle();
+    setSoundEnabled(newState);
+  };
+
   const [animatedDice, setAnimatedDice] = useState({
     visible: false, value: 1, startLeft: "0%", startTop: "0%", endLeft: "50%", endTop: "50%", rot: 0 
   });
@@ -266,6 +274,7 @@ export default function SnakesLadders() {
   }, [usedQuestions]);
 
   const triggerConfetti = () => {
+    soundFX.playWin();
     const duration = 3000;
     const animationEnd = Date.now() + duration;
     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
@@ -276,6 +285,7 @@ export default function SnakesLadders() {
   };
 
   const handleStartGame = () => {
+    soundFX.init();
     const initialPlayers = [];
     for (let i = 0; i < numPlayers; i++) {
       initialPlayers.push({
@@ -304,6 +314,7 @@ export default function SnakesLadders() {
   const handleRollDice = () => {
     if (isRolling || quizModal.isOpen || feedbackModal.isOpen || gameWon || setupMode) return;
     
+    soundFX.playDiceRoll();
     setIsRolling(true);
     const finalValue = Math.floor(Math.random() * 6) + 1;
     
@@ -427,10 +438,13 @@ export default function SnakesLadders() {
     } : p));
 
     if (isCorrect) {
+      soundFX.playCorrect();
       updateAchievement("data_explorer", 1);
       if (quizModal.type === "snake") {
         updateAchievement("snake_charmer", 1);
       }
+    } else {
+      soundFX.playWrong();
     }
 
     let targetPos = null;
@@ -458,6 +472,11 @@ export default function SnakesLadders() {
     setFeedbackModal({ isOpen: false, isCorrect: false, explanation: "", type: null, targetPos: null, hasBonus: false });
 
     if (targetPos !== null) {
+      if (feedbackModal.type === "ladder" && feedbackModal.isCorrect) {
+        soundFX.playLadder();
+      } else if (feedbackModal.type === "snake" && !feedbackModal.isCorrect) {
+        soundFX.playSnake();
+      }
       setPlayers(prev => prev.map((p, idx) => idx === currentPlayerIdx ? { ...p, position: targetPos } : p));
       
       if (targetPos === TOTAL_CELLS) {
@@ -668,6 +687,13 @@ export default function SnakesLadders() {
             >
               <Dices size={18} />
               Kocok Dadu
+            </button>
+            <button 
+              onClick={toggleSound}
+              className="h-14 w-14 rounded-xl border-2 border-gray-100 hover:border-indigo-300 hover:bg-indigo-50 flex items-center justify-center transition-all text-gray-400 hover:text-indigo-600"
+              title={soundEnabled ? "Nonaktifkan Suara" : "Aktifkan Suara"}
+            >
+              {soundEnabled ? <Volume2 size={20} className="text-indigo-600" /> : <VolumeX size={20} className="text-gray-400" />}
             </button>
             <button 
               onClick={resetGame}
