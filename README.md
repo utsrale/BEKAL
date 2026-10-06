@@ -128,8 +128,8 @@ Pastikan Anda telah menginstal **Node.js** (versi 18 ke atas) dan **npm** / **ya
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/utsrale/Dashboard-SEC.git
-cd Dashboard-SEC/datavention-web
+git clone https://github.com/utsrale/BEKAL.git
+cd BEKAL
 ```
 
 ### 2. Pasang Dependensi
