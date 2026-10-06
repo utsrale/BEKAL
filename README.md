@@ -13,7 +13,7 @@
 
 ---
 
-[🌐 Demo Langsung](#-tinjauan-fitur-utama) • [📊 Metodologi Statistik](#-metodologi-analisis-statistik) • [🎲 Mekanisme Permainan](#-mekanisme-gamifikasi-ular-tangga) • [🚀 Panduan Instalasi](#-panduan-instalasi-lokal) • [👥 Tim Pengembang](#-tim-pengembang)
+[🌐 Demo Langsung](#-tinjauan-fitur-utama) • [📊 Metodologi Statistik](#-metodologi-analisis-statistik) • [🎲 Mekanisme Permainan](#-mekanisme-gamifikasi-ular-tangga) • [🚀 Panduan Instalasi](#-panduan-instalasi-lokal)
 
 </div>
 
@@ -149,18 +149,3 @@ Buka [http://localhost:3000](http://localhost:3000) pada peramban web (*browser*
 npm run build
 npm start
 ```
-
----
-
-## 👥 Tim Pengembang
-
-Karya ini dikembangkan oleh **Tim BEKAL** dalam rangka kompetisi **Satria Data (Statistika Ria dan Festival Sains Data) 2026** — *Statistics Essay Competition (SEC)*:
-
-* **Universitas Sebelas Maret (UNS)**
-* Bidang Kajian: Statistika Terapan, Sains Data Spasial, dan Gamifikasi Edukasi Publik
-
----
-
-<div align="center">
-  <sub>Dibangun dengan dedikasi untuk mendukung Ketahanan Pangan Nasional dan Mewujudkan Visi Indonesia Emas 2045 &bull; SDG 2 & SDG 12.3</sub>
-</div>
